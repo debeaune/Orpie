@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        {% for espece in especesListe %}
+            <ul>
+                <li><a href="{{ path('app_especes_show'), {'id': espece.id}) }}"><a><li>
+            <ul>
+        {% endfor %}
+    </div>
+    
+{% endblock %}
