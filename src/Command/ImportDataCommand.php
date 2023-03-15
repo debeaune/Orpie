@@ -86,8 +86,9 @@ class ImportDataCommand extends Command
             ];
         }
 
-        dump($dataUpdate);
-        $this->insertDataBase($dataUpdate);
+        if(!$dataUpdate){
+            $this->insertDataBase($dataUpdate); 
+        }
             
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 

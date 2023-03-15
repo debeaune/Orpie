@@ -2,11 +2,17 @@
 
 {% block body %}
     <div>
+        <b>Nombre d'espèces: </b>{{ especesListe|length }}
+    </div>
+    <div>
         {% for espece in especesListe %}
             <ul>
-                <li><a href="{{ path('app_especes_show'), {'id': espece.id}) }}"><a><li>
-            <ul>
+                <li><a href="{{path('especes_show', {'id': espece.id})}}">
+                    {{espece.getEspece()}}
+                </a></li>
+            </ul>
         {% endfor %}
     </div>
+
     
 {% endblock %}

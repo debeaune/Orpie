@@ -12,15 +12,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 class EspecesController extends AbstractController
 {
-    #[Route('/liste-des-especes', name: 'app_especes_index')]
+    #[Route('/liste-des-especes', name: 'especes_index')]
     public function index(EspecesRepository $especeRepository): Response
     {
-        return $this->render('especes/index.html.twig', [
+        return $this->render('espece/index.html.twig', [
             'especesListe' => $especeRepository->findAll(),
         ]);
     }
 
-    #[Route('/espece/[id]', name: 'app_especes_show')]
+    #[Route('/espece/[id]', name: 'especes_show')]
     public function showOneEspece(Especes $espece,EspecesRepository $especesRepository, int $id):Response
     {
         $espece=$especesRepository->getEspeces($id);
@@ -30,7 +30,7 @@ class EspecesController extends AbstractController
         ]);
     }
 
-    #[Route('/import', name: 'app_especes_add')]
+    #[Route('/import', name: 'especes_add')]
     public function addEspece(Request $request,EspecesRepository $especesRepository):Response
     {
         $espece=new Especes();
