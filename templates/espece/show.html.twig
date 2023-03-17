@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+{% endblock %}
+
+{% block javascript %}
+{{ encore_entry_script_tags('app') }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"
+        integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs=" crossorigin="anonymous"></script>
+    <script>
+        function fetchJSON() {
+            const url = 'https://taxref.mnhn.fr/api/taxa/autocomplete?term=parus%20major&page=1&size=200';
+            axios.get(url)
+                .then(function (response) {
+                    return response.data;
+                })
+                .then(function (espece) {
+                    console.log('data decoded from JSON:', espece);
+
+                });
+        }
+
+        fetchJSON();
+    </script>
+{% endblock %}
+

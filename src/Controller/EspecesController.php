@@ -20,12 +20,12 @@ class EspecesController extends AbstractController
         ]);
     }
 
-    #[Route('/espece/[id]', name: 'especes_show')]
-    public function showOneEspece(Especes $espece,EspecesRepository $especesRepository, int $id):Response
+    #[Route('/espece/{id}', name: 'especes_show')]
+    public function showOneEspece(EspecesRepository $especesRepository, int $id):Response
     {
-        $espece=$especesRepository->getEspeces($id);
+        $espece=$especesRepository->find($id);
 
-        return $this->render('especes/show.html.twig', [
+        return $this->render('espece/show.html.twig', [
             'espece' => $espece,
         ]);
     }

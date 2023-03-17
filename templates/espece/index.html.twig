@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div>
+    <div class="header">
         <b>Nombre d'espèces: </b>{{ especesListe|length }}
     </div>
-    <div>
-        {% for espece in especesListe %}
-            <ul>
+    <div class="main">
+        <ul>
+            {% for espece in especesListe %}
                 <li><a href="{{path('especes_show', {'id': espece.id})}}">
                     {{espece.getEspece()}}
                 </a></li>
-            </ul>
-        {% endfor %}
+            {% endfor %}
+        </ul>
     </div>
 
     

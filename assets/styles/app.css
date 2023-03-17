@@ -1,15 +1,18 @@
-.main {
+body {
+  background-color: white;
+}
+
+.main ul {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  margin-left: 30%;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 a {
   font-style: italic;
   text-decoration: none;
-  background-color: #4a89dd;
+  color: #4a89dd;
   font-weight: bold;
   font-size: 16px;
   line-height: 1.5;
   font-family: BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-}/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=app.css.map */
