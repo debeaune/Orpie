@@ -86,7 +86,7 @@ class ImportDataCommand extends Command
             ];
         }
 
-        if(!$dataUpdate){
+        if(!empty($dataUpdate)){
             $this->insertDataBase($dataUpdate); 
         }
             

@@ -1,28 +1,62 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="container">
 
+        <section>
+            {% set taxrefVersion = detail.taxrefVersion %}
+            <table>
+                <div>la version {{taxrefVersion|number_format(0)}} de taxref
+                </div>
+                <tr>
+                    <td colspan="2">
+                        {% if media and media._embedded %}
+                            <img src="{{ media._embedded.media[1]['_links']['file']['href'] }}" style="width: 500px"
+                                 alt="TAXON">
+                        {% else %}
+                            <img src="" alt="">
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bold">Nom complet</td>
+                    <td> {{ detail ? detail.fullName : '...' }} </td>
+                </tr>
+                <tr>
+                    <td class="bold">Ordre</td>
+                    <td> {{ detail ? detail.orderName : '...' }} </td>
+                </tr>
+                <tr>
+                    <td class="bold">Famille</td>
+                    <td> {{ detail ? detail.familyName : '...' }} </td>
+                </tr>
+                <tr>
+                    <td class="bold">Descripteur</td>
+                    {% set auth = detail.authority|split(',') %}
+                    <td> {{ detail ? auth[0] : '...' }} </td>
+                </tr>
+                <tr>
+                    <td class="bold">Année</td>
+                     <td> {{ detail ? auth[1] : '...' }} </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="bold">Nom français</td>
+                    <td> {{ detail ? detail.frenchVernacularName : '...' }} </td>
+                </tr>
+                <tr>
+                    <td class="bold">Nom anglais</td>
+                    <td> {{ detail ? detail.englishVernacularName : '...' }} </td>
+                </tr>
+                <tr>
+                    <td class="bold">Habitat</td>
+                    <td> {{ habitat }} </td>
+                </tr>
+            </table>
+        </section>
+    </div>
 
 {% endblock %}
 
-{% block javascript %}
-{{ encore_entry_script_tags('app') }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"
-        integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs=" crossorigin="anonymous"></script>
-    <script>
-        function fetchJSON() {
-            const url = 'https://taxref.mnhn.fr/api/taxa/autocomplete?term=parus%20major&page=1&size=200';
-            axios.get(url)
-                .then(function (response) {
-                    return response.data;
-                })
-                .then(function (espece) {
-                    console.log('data decoded from JSON:', espece);
 
-                });
-        }
-
-        fetchJSON();
-    </script>
-{% endblock %}
 

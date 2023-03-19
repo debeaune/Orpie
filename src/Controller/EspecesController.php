@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Repository\EspecesRepository;
 use App\Entity\Especes;
 USE App\Form\EspeceType;
+use App\Model\OpieApi;
 use Symfony\Component\HttpFoundation\Request; 
 
 class EspecesController extends AbstractController
@@ -21,12 +22,20 @@ class EspecesController extends AbstractController
     }
 
     #[Route('/espece/{id}', name: 'especes_show')]
-    public function showOneEspece(EspecesRepository $especesRepository, int $id):Response
+    public function showOneEspece(int $id):Response
     {
-        $espece=$especesRepository->find($id);
+        $detail = OpieApi::detail($id);
+        if(isset($detail['habitat']) && $detail['habitat']!==null){
+            $habitat = OpieApi::habitat((int)$detail['habitat']);
+        }
+        
+
+        $media = OpieApi::media($id);
 
         return $this->render('espece/show.html.twig', [
-            'espece' => $espece,
+            'detail' => $detail,
+            'media' => $media,
+            'habitat' => $habitat['name']??""
         ]);
     }
 
