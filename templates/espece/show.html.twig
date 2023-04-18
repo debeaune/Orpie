@@ -2,11 +2,12 @@
 
 {% block body %}
     <div class="container">
-
+        {% if detail|length == 0 %}
+            <h3>Aucune information trouvée</h3>
+        {% else %}
         <section>
-            {% set taxrefVersion = detail.taxrefVersion %}
             <table>
-                <div>la version {{taxrefVersion|number_format(0)}} de taxref
+                <div>la version {{detail.taxrefVersion|number_format(0)}} de taxref
                 </div>
                 <tr>
                     <td colspan="2">
@@ -54,6 +55,7 @@
                 </tr>
             </table>
         </section>
+        {% endif %}
     </div>
 
 {% endblock %}

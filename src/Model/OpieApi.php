@@ -20,14 +20,16 @@ class OpieApi
      */
     public static function media(int $id): array
     {
-        try {
-            $url = 'https://taxref.mnhn.fr/api/taxa/' . $id . '/media';
-            $client = HttpClient::create();
-            $response = $client->request('GET', $url);
-            return $response->toArray();
+        $url = 'https://taxref.mnhn.fr/api/taxa/' . $id . '/media';
+        if(isset($url)){
+            try {
+                $client = HttpClient::create();
+                $response = $client->request('GET', $url);
+                return $response->toArray();
         } catch (\Exception $e) {
             return [];
         }
+    }
     }
 
     /**
@@ -41,8 +43,24 @@ class OpieApi
      */
     public static function detail(int $id): array
     {
+        $url = 'https://taxref.mnhn.fr/api/taxa/' . $id;
+        if(isset($url)){
         try {
-            $url = 'https://taxref.mnhn.fr/api/taxa/' . $id;
+            $client = HttpClient::create();
+            $response = $client->request('GET', $url);
+            //dd($response);
+            return $response->toArray();
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+    }   
+
+    public static function habitat(int $id): array
+    {
+        $url = 'https://taxref.mnhn.fr/api/habitats/' . $id;
+        if(isset($url)){
+        try {
             $client = HttpClient::create();
             $response = $client->request('GET', $url);
             return $response->toArray();
@@ -50,16 +68,5 @@ class OpieApi
             return [];
         }
     }
-
-    public static function habitat(int $id): array
-    {
-        try {
-            $url = 'https://taxref.mnhn.fr/api/habitats/' . $id;
-            $client = HttpClient::create();
-            $response = $client->request('GET', $url);
-            return $response->toArray();
-        } catch (\Exception $e) {
-            return [];
-        }
     }
 }

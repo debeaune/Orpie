@@ -16,21 +16,25 @@ class EspecesController extends AbstractController
     #[Route('/liste-des-especes', name: 'especes_index')]
     public function index(EspecesRepository $especeRepository): Response
     {
+
         return $this->render('espece/index.html.twig', [
             'especesListe' => $especeRepository->findAll(),
         ]);
     }
 
     #[Route('/espece/{id}', name: 'especes_show')]
-    public function showOneEspece(int $id):Response
+    public function showOneEspece(int $id, EspecesRepository $especesRepository):Response
     {
+        $resultat= $especesRepository->find($id);
+        dd($resultat);
         $detail = OpieApi::detail($id);
         if(isset($detail['habitat']) && $detail['habitat']!==null){
             $habitat = OpieApi::habitat((int)$detail['habitat']);
         }
         
-
         $media = OpieApi::media($id);
+
+        //dd($detail);
 
         return $this->render('espece/show.html.twig', [
             'detail' => $detail,
@@ -45,6 +49,8 @@ class EspecesController extends AbstractController
         $espece=new Especes();
         $form = $this->createForm(EspeceType::class, $espece);
         $form->handleRequest($request);
+
+        //dd($form->getData());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $especesRepository->save($espece, true);
