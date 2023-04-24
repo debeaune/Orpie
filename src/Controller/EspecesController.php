@@ -34,7 +34,6 @@ class EspecesController extends AbstractController
         
         $media = OpieApi::media($id);
 
-        //dd($detail);
 
         return $this->render('espece/show.html.twig', [
             'detail' => $detail,

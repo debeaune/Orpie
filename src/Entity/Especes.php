@@ -5,8 +5,6 @@ namespace App\Entity;
 use App\Repository\EspecesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use PhpOffice\PhpSpreadsheet\Calculation\TextData\Format;
-use DateTime;
 
 #[ORM\Entity(repositoryClass: EspecesRepository::class)]
 class Especes
@@ -16,35 +14,32 @@ class Especes
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $genre = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $espece = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $Ordre = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $famille = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $auteur = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $nomAnglais = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $nomFrancais = null;
-
-    #[ORM\Column(type:'datetime')]
-    private ?\DateTime $decritEn = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $update_at = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ordre = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $famille = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $auteur = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nomAnglais = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nomFrancais = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $decrit_en = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $update_at = null;
 
     public function getId(): ?int
     {
@@ -56,7 +51,7 @@ class Especes
         return $this->genre;
     }
 
-    public function setGenre(string $genre): self
+    public function setGenre(?string $genre): self
     {
         $this->genre = $genre;
 
@@ -68,7 +63,7 @@ class Especes
         return $this->espece;
     }
 
-    public function setEspece(string $espece): self
+    public function setEspece(?string $espece): self
     {
         $this->espece = $espece;
 
@@ -77,12 +72,12 @@ class Especes
 
     public function getOrdre(): ?string
     {
-        return $this->Ordre;
+        return $this->ordre;
     }
 
-    public function setOrdre(string $Ordre): self
+    public function setOrdre(?string $ordre): self
     {
-        $this->Ordre = $Ordre;
+        $this->ordre = $ordre;
 
         return $this;
     }
@@ -92,7 +87,7 @@ class Especes
         return $this->famille;
     }
 
-    public function setFamille(string $famille): self
+    public function setFamille(?string $famille): self
     {
         $this->famille = $famille;
 
@@ -104,7 +99,7 @@ class Especes
         return $this->auteur;
     }
 
-    public function setAuteur(string $auteur): self
+    public function setAuteur(?string $auteur): self
     {
         $this->auteur = $auteur;
 
@@ -116,7 +111,7 @@ class Especes
         return $this->nomAnglais;
     }
 
-    public function setNomAnglais(string $nomAnglais): self
+    public function setNomAnglais(?string $nomAnglais): self
     {
         $this->nomAnglais = $nomAnglais;
 
@@ -128,21 +123,21 @@ class Especes
         return $this->nomFrancais;
     }
 
-    public function setNomFrancais(string $nomFrancais): self
+    public function setNomFrancais(?string $nomFrancais): self
     {
         $this->nomFrancais = $nomFrancais;
 
         return $this;
     }
 
-    public function getDecritEn(): ?\DateTime
+    public function getDecritEn(): ?\DateTimeInterface
     {
-        return $this->decritEn;
+        return $this->decrit_en;
     }
 
-    public function setDecritEn(\DateTime $decritEn): self
+    public function setDecritEn(?\DateTimeInterface $decrit_en): self
     {
-        $this->decritEn = $decritEn;
+        $this->decrit_en = $decrit_en;
 
         return $this;
     }
@@ -152,7 +147,7 @@ class Especes
         return $this->update_at;
     }
 
-    public function setUpdateAt(\DateTimeImmutable $update_at): self
+    public function setUpdateAt(?\DateTimeImmutable $update_at): self
     {
         $this->update_at = $update_at;
 
