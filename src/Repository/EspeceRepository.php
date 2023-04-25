@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Especes;
+use App\Entity\Espece;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Especes>
+ * @extends ServiceEntityRepository<Espece>
  *
- * @method Especes|null find($id, $lockMode = null, $lockVersion = null)
- * @method Especes|null findOneBy(array $criteria, array $orderBy = null)
- * @method Especes[]    findAll()
- * @method Especes[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Espece|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Espece|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Espece[]    findAll()
+ * @method Espece[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EspecesRepository extends ServiceEntityRepository
+class EspeceRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Especes::class);
+        parent::__construct($registry, Espece::class);
     }
 
-    public function save(Especes $entity, bool $flush = false): void
+    public function save(Espece $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class EspecesRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Especes $entity, bool $flush = false): void
+    public function remove(Espece $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class EspecesRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Especes[] Returns an array of Especes objects
+//     * @return Espece[] Returns an array of Espece objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class EspecesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Especes
+//    public function findOneBySomeField($value): ?Espece
 //    {
 //        return $this->createQueryBuilder('e')
 //            ->andWhere('e.exampleField = :val')

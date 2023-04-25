@@ -3,8 +3,8 @@
 namespace App\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\Especes;
-use App\Repository\EspecesRepository;
+use App\Entity\Espece;
+use App\Repository\EspeceRepository;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -29,7 +29,7 @@ class ImportDataCommand extends Command
     public $entityManager;
     public $especeRepository;
 
-    public function __construct(EntityManagerInterface $entityManager,EspecesRepository $especeRepository)
+    public function __construct(EntityManagerInterface $entityManager, EspeceRepository $especeRepository)
     {
         $this->especeRepository= $especeRepository;
         $this->entityManager = $entityManager;
@@ -98,7 +98,7 @@ class ImportDataCommand extends Command
     function insertDataBase(array $data)
     {
         foreach($data as $d){
-            $espece = new Especes();
+            $espece = new Espece();
             $espece->setEspece($d["A"]);
             $espece->setGenre($d["B"]);
             $this->entityManager->persist($espece);
