@@ -39,28 +39,12 @@ class EspeceRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Espece[] Returns an array of Espece objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Espece
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findByNom(string $nom): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.espece LIKE :nom')
+            ->setParameter('nom', $nom . '%')
+            ->getQuery()
+            ->getResult();
+    }
 }

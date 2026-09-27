@@ -10,6 +10,7 @@ use App\Entity\Espece;
 use App\Form\EspeceType;
 use App\Model\OpieApi;
 use Symfony\Component\HttpFoundation\Request; 
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class EspecesController extends AbstractController
 {
@@ -20,6 +21,22 @@ class EspecesController extends AbstractController
         return $this->render('espece/index.html.twig', [
             'especesListe' => $especeRepository->findAll(),
         ]);
+    }
+
+    #[Route('/espece/search', name: 'especes_search')]
+    public function search(Request $request, EspeceRepository $especeRepository): JsonResponse
+    {
+        $nom = $request->query->get('q', '');
+        $resultats = $especeRepository->findByNom($nom);
+
+        $data = array_map(function($espece) {
+            return [
+                'id' => $espece->getId(),
+                'espece' => $espece->getEspece(),
+            ];
+        }, $resultats);
+
+        return new JsonResponse($data);
     }
 
     #[Route('/espece/{id}', name: 'especes_show')]
@@ -43,7 +60,6 @@ class EspecesController extends AbstractController
         $form = $this->createForm(EspeceType::class, $espece);
         $form->handleRequest($request);
 
-        //dd($form->getData());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $especeRepository->save($espece, true);

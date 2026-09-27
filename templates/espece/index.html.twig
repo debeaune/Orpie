@@ -2,17 +2,36 @@
 
 {% block body %}
     <div class="header">
-        <b>Nombre d'espèces: </b>{{ especesListe|length }}
+        <b>Nombre d'espèces: </b><span id="count">{{ especesListe|length }}</span>
     </div>
     <div class="main">
-        <ul>
+        <input type="text" id="search" placeholder="Rechercher une espèce...">
+        <ul id="liste">
             {% for espece in especesListe %}
-                <li><a href="{{path('especes_show', {'id': espece.id})}}">
-                    {{espece.getEspece()}}
+                <li><a href="{{ path('especes_show', {'id': espece.id}) }}">
+                    {{ espece.getEspece() }}
                 </a></li>
             {% endfor %}
         </ul>
     </div>
 
-    
+    <script>
+        const search = document.getElementById('search');
+        const liste = document.getElementById('liste');
+        const count = document.getElementById('count');
+
+        search.addEventListener('input', function() {
+            const q = this.value;
+
+            fetch('/espece/search?q=' + encodeURIComponent(q))
+                .then(response => response.json())
+                .then(data => {
+                    liste.innerHTML = '';
+                    count.textContent = data.length;
+                    data.forEach(espece => {
+                        liste.innerHTML += `<li><a href="/espece/${espece.id}">${espece.espece}</a></li>`;
+                    });
+                });
+        });
+    </script>
 {% endblock %}
