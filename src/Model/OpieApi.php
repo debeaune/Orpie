@@ -41,20 +41,23 @@ class OpieApi
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public static function detail(int $id): array
+    
+    public static function detail(string $nom): array
     {
-        $url = 'https://taxref.mnhn.fr/api/taxa/' . $id;
-        if(isset($url)){
+        $nomEncoded = urlencode($nom);
+        $url = 'https://api.inaturalist.org/v1/taxa?q=' . $nomEncoded;
         try {
             $client = HttpClient::create();
             $response = $client->request('GET', $url);
-            //dd($response);
-            return $response->toArray();
-        } catch (\Exception $e) {
+            $data = $response->toArray();
+            if(isset($data['results'][0])){
+                return $data['results'][0];
+            }
             return [];
+        } catch (\Exception $e) {
+            return []; // affiche l'erreur au lieu de la cacher
         }
     }
-    }   
 
     public static function habitat(int $id): array
     {

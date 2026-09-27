@@ -1,64 +1,40 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
     <div class="container">
-        {% if detail|length == 0 %}
-            <h3>Aucune information trouvée</h3>
-        {% else %}
         <section>
             <table>
-                <div>la version {{detail.taxrefVersion|number_format(0)}} de taxref
-                </div>
                 <tr>
                     <td colspan="2">
-                        {% if media and media._embedded %}
-                            <img src="{{ media._embedded.media[1]['_links']['file']['href'] }}" style="width: 500px"
-                                 alt="TAXON">
+                        {% if detail.default_photo is defined and detail.default_photo %}
+                            <img src="{{ detail.default_photo.medium_url }}" style="width: 500px" alt="photo">
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr><td class="bold">Nom latin</td><td>{{ detail.name ?? resultat.espece }}</td></tr>
+                <tr><td class="bold">Nom anglais</td><td>{{ detail.preferred_common_name ?? '...' }}</td></tr>
+                <tr><td class="bold">Groupe</td><td>{{ resultat.genre }}</td></tr>
+                <tr><td class="bold">Habitat</td><td>{{ resultat.habitat ?? '...' }}</td></tr>
+                <tr>
+                    <td class="bold">Statut de conservation</td>
+                    <td>
+                        {% if detail.conservation_status is defined and detail.conservation_status %}
+                            {{ detail.conservation_status.status_name }}
                         {% else %}
-                            <img src="" alt="">
+                            ...
                         {% endif %}
                     </td>
                 </tr>
                 <tr>
-                    <td class="bold">Nom complet</td>
-                    <td> {{ detail ? detail.fullName : '...' }} </td>
-                </tr>
-                <tr>
-                    <td class="bold">Ordre</td>
-                    <td> {{ detail ? detail.orderName : '...' }} </td>
-                </tr>
-                <tr>
-                    <td class="bold">Famille</td>
-                    <td> {{ detail ? detail.familyName : '...' }} </td>
-                </tr>
-                <tr>
-                    <td class="bold">Descripteur</td>
-                    {% set auth = detail.authority|split(',') %}
-                    <td> {{ detail ? auth[0] : '...' }} </td>
-                </tr>
-                <tr>
-                    <td class="bold">Année</td>
-                     <td> {{ detail ? auth[1] : '...' }} </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="bold">Nom français</td>
-                    <td> {{ detail ? detail.frenchVernacularName : '...' }} </td>
-                </tr>
-                <tr>
-                    <td class="bold">Nom anglais</td>
-                    <td> {{ detail ? detail.englishVernacularName : '...' }} </td>
-                </tr>
-                <tr>
-                    <td class="bold">Habitat</td>
-                    <td> {{ habitat }} </td>
+                    <td class="bold">Wikipedia</td>
+                    <td>
+                        {% if detail.wikipedia_url is defined and detail.wikipedia_url %}
+                            <a href="{{ detail.wikipedia_url }}" target="_blank">Voir sur Wikipedia</a>
+                        {% else %}...{% endif %}
+                    </td>
                 </tr>
             </table>
         </section>
-        {% endif %}
     </div>
-
 {% endblock %}
-
 
 

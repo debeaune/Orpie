@@ -82,7 +82,8 @@ class ImportDataCommand extends Command
 
             $dataUpdate[] = [
                 "A" => trim(str_replace(['<i>', '</i>'], '', $data["A"])),
-                "B" => $data["B"]
+                "B" => $data["B"],
+                "C" => $data["C"] ?? null
             ];
         }
 
@@ -101,6 +102,7 @@ class ImportDataCommand extends Command
             $espece = new Espece();
             $espece->setEspece($d["A"]);
             $espece->setGenre($d["B"]);
+            $espece->setHabitat($d["C"] ?? null);
             $this->entityManager->persist($espece);
         }
         $this->entityManager->flush();

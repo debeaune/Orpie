@@ -25,21 +25,15 @@ class EspecesController extends AbstractController
     #[Route('/espece/{id}', name: 'especes_show')]
     public function showOneEspece(int $id, EspeceRepository $especeRepository):Response
     {
-        $resultat= $especeRepository->find($id);
-        //dd($resultat);
-        $detail = OpieApi::detail($id);
-        //dd($detail);
-        if(isset($detail['habitat']) && $detail['habitat']!==null){
-            $habitat = OpieApi::habitat((int)$detail['habitat']);
-        }
-        
-        $media = OpieApi::media($id);
+        $resultat = $especeRepository->find($id);
+        $nomLatin = $resultat->getEspece();
+        $detail = OpieApi::detail($nomLatin);
 
         return $this->render('espece/show.html.twig', [
             'detail' => $detail,
-            'media' => $media,
-            'habitat' => $habitat['name']??""
+            'resultat' => $resultat
         ]);
+        
     }
 
     #[Route('/import', name: 'especes_add')]
