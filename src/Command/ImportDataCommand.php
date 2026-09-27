@@ -58,7 +58,7 @@ class ImportDataCommand extends Command
             // ...
         }
 
-        $fileFolder = __DIR__ . '/../../public/'; 
+        $fileFolder = __DIR__ . '/../../data/'; 
 
         $file= "liste.xlsx";
         $spreadsheet = IOFactory::load($fileFolder.$file);
@@ -102,7 +102,7 @@ class ImportDataCommand extends Command
             $espece->setEspece($d["A"]);
             $espece->setGenre($d["B"]);
             $this->entityManager->persist($espece);
-            $this->entityManager->flush();
         }
+        $this->entityManager->flush();
     }
 }

@@ -12,17 +12,17 @@
         "doctrine/orm": "^2.14",
         "phpoffice/phpspreadsheet": "^1.28",
         "symfony/apache-pack": "^1.0",
-        "symfony/console": "6.0.*",
-        "symfony/dependency-injection": "6.0.*",
-        "symfony/dotenv": "6.0.*",
+        "symfony/console": "6.4.*",
+        "symfony/dependency-injection": "6.4.*",
+        "symfony/dotenv": "6.4.*",
         "symfony/flex": "^2",
-        "symfony/framework-bundle": "6.0.*",
-        "symfony/http-client": "6.0.*",
+        "symfony/framework-bundle": "6.4.*",
+        "symfony/http-client": "6.4.*",
         "symfony/maker-bundle": "^1.48",
-        "symfony/runtime": "6.0.*",
-        "symfony/twig-bundle": "6.0.*",
+        "symfony/runtime": "6.4.*",
+        "symfony/twig-bundle": "6.4.*",
         "symfony/webpack-encore-bundle": "^1.16",
-        "symfony/yaml": "6.0.*",
+        "symfony/yaml": "6.4.*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/intl-extra": "^3.5",
         "twig/twig": "^2.12|^3.0"
@@ -37,7 +37,12 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "policy": {
+            "advisories": {
+                "block": false
+            }
+        }
     },
     "autoload": {
         "psr-4": {
@@ -75,7 +80,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": true,
-            "require": "6.0.*"
+            "require": "6.4.*"
         }
     }
 }
