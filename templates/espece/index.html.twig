@@ -1,37 +1,64 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="header">
-        <b>Nombre d'espèces: </b><span id="count">{{ especesListe|length }}</span>
+<div class="page-header">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; width: 100%;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor" style="color: white;">
+            <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2-8 2 2-2 4-4 4-4S8 3 6 8c-1.5 3-1 6 0 8 1-4 3-6 6-8z"/>
+        </svg>
+        <h1>Observatoire des espèces</h1>
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor" style="color: white; transform: scaleX(-1);">
+            <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2-8 2 2-2 4-4 4-4S8 3 6 8c-1.5 3-1 6 0 8 1-4 3-6 6-8z"/>
+        </svg>
     </div>
-    <div class="main">
-        <input type="text" id="search" placeholder="Rechercher une espèce...">
-        <ul id="liste">
-            {% for espece in especesListe %}
-                <li><a href="{{ path('especes_show', {'id': espece.id}) }}">
-                    {{ espece.getEspece() }}
-                </a></li>
-            {% endfor %}
-        </ul>
-    </div>
+    <p>Nombre d'espèces : <span id="count">{{ especesListe|length }}</span></p>
+    <input type="text" id="search" placeholder="Rechercher une espèce...">
+</div>
 
-    <script>
-        const search = document.getElementById('search');
-        const liste = document.getElementById('liste');
-        const count = document.getElementById('count');
+<div class="especes-grid" id="liste">
+    {% for espece in especesListe %}
+        <a href="{{ path('especes_show', {'id': espece.id}) }}" class="card">
+            {% if espece.photo %}
+                <img src="{{ espece.photo }}" alt="{{ espece.espece }}">
+            {% else %}
+                <div class="no-photo">Photo non disponible</div>
+            {% endif %}
+            <div class="card-body">
+                <h2>{{ espece.espece }}</h2>
+                <p>{{ espece.genre }}</p>
+            </div>
+        </a>
+    {% endfor %}
+</div>
 
-        search.addEventListener('input', function() {
-            const q = this.value;
+<script>
+    const search = document.getElementById('search');
+    const liste = document.getElementById('liste');
+    const count = document.getElementById('count');
 
-            fetch('/espece/search?q=' + encodeURIComponent(q))
-                .then(response => response.json())
-                .then(data => {
-                    liste.innerHTML = '';
-                    count.textContent = data.length;
-                    data.forEach(espece => {
-                        liste.innerHTML += `<li><a href="/espece/${espece.id}">${espece.espece}</a></li>`;
-                    });
+    search.addEventListener('input', function() {
+        const q = this.value;
+
+        fetch('/espece/search?q=' + encodeURIComponent(q))
+            .then(response => response.json())
+            .then(data => {
+                liste.innerHTML = '';
+                count.textContent = data.length;
+                data.forEach(espece => {
+                    liste.innerHTML += `
+                        <a href="/espece/${espece.id}" class="card">
+                            ${espece.photo 
+                                ? `<img src="${espece.photo}" alt="${espece.espece}">` 
+                                : `<div class="no-photo">Photo non disponible</div>`
+                            }
+                            <div class="card-body">
+                                <h2>${espece.espece}</h2>
+                                <p>${espece.genre}</p>
+                            </div>
+                        </a>
+                    `;
                 });
-        });
-    </script>
+            });
+    });
+</script>
 {% endblock %}

@@ -41,6 +41,12 @@ class ImportDataCommand extends Command
         $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
         foreach ($sheetData as $data) {
+            $nomFrancais = null;
+            if (preg_match('/\(([^)]+)\)/', $data["A"], $matches)) {
+                $nomFrancais = $matches[1];
+            } elseif (preg_match('/[a-zA-Z ]+ - (.+)/', $data["A"], $matches)) {
+                $nomFrancais = trim($matches[1]);
+            }
             if (preg_match(self::PATTERN_MATCH_PARENTHESIS, $data["A"])) {
                 $data["A"] = trim(preg_replace(self::PATTERN_REPLACE_PARENTHESIS, '${1}', $data["A"]));
             } else if (preg_match(self::PATTERN_MATCH_DASH, $data["A"])) {
@@ -58,7 +64,8 @@ class ImportDataCommand extends Command
             $dataUpdate[] = [
                 "A" => trim(str_replace(['<i>', '</i>'], '', $data["A"])),
                 "B" => $data["B"],
-                "C" => $data["C"] ?? null
+                "C" => $data["C"] ?? null,
+                "nomFrancais" => $nomFrancais
             ];
         }
 
@@ -78,6 +85,7 @@ class ImportDataCommand extends Command
             $espece->setEspece($d["A"]);
             $espece->setGenre($d["B"]);
             $espece->setHabitat($d["C"] ?? null);
+            $espece->setNomFrancais($d["nomFrancais"] ?? null);
             $this->entityManager->persist($espece);
         }
         $this->entityManager->flush();

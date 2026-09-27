@@ -1,40 +1,51 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container">
-        <section>
-            <table>
-                <tr>
-                    <td colspan="2">
-                        {% if detail.default_photo is defined and detail.default_photo %}
-                            <img src="{{ detail.default_photo.medium_url }}" style="width: 500px" alt="photo">
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr><td class="bold">Nom latin</td><td>{{ detail.name ?? resultat.espece }}</td></tr>
-                <tr><td class="bold">Nom anglais</td><td>{{ detail.preferred_common_name ?? '...' }}</td></tr>
-                <tr><td class="bold">Groupe</td><td>{{ resultat.genre }}</td></tr>
-                <tr><td class="bold">Habitat</td><td>{{ resultat.habitat ?? '...' }}</td></tr>
-                <tr>
-                    <td class="bold">Statut de conservation</td>
-                    <td>
-                        {% if detail.conservation_status is defined and detail.conservation_status %}
-                            {{ detail.conservation_status.status_name }}
-                        {% else %}
-                            ...
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="bold">Wikipedia</td>
-                    <td>
-                        {% if detail.wikipedia_url is defined and detail.wikipedia_url %}
-                            <a href="{{ detail.wikipedia_url }}" target="_blank">Voir sur Wikipedia</a>
-                        {% else %}...{% endif %}
-                    </td>
-                </tr>
-            </table>
-        </section>
-    </div>
-{% endblock %}
 
+<div class="page-header">
+    <h1>{{ resultat.nomFrancais ?? resultat.espece }}</h1>
+    <p><em>{{ detail.name ?? resultat.espece }}</em></p>
+</div>
+<div style="padding: 1rem 2rem;">
+    <a href="{{ path('especes_index') }}" class="back-link">← Retour à la liste</a>
+</div>
+
+<div class="detail-container">
+    <div class="detail-photo">
+        {% if detail.default_photo is defined and detail.default_photo %}
+            <img src="{{ detail.default_photo.medium_url }}" alt="{{ resultat.espece }}">
+        {% else %}
+            <div class="no-photo">Photo non disponible</div>
+        {% endif %}
+    </div>
+
+    <div class="detail-info">
+        <table class="info-table">
+            <tr><td>Nom latin</td><td><em>{{ detail.name ?? resultat.espece }}</em></td></tr>
+            <tr><td>Nom français</td><td>{{ resultat.nomFrancais ?? '...' }}</td></tr>
+            <tr><td>Nom anglais</td><td>{{ detail.preferred_common_name ?? '...' }}</td></tr>
+            <tr><td>Groupe</td><td>{{ resultat.genre }}</td></tr>
+            <tr><td>Habitat</td><td>{{ resultat.habitat ?? '...' }}</td></tr>
+            <tr>
+                <td>Statut de conservation</td>
+                <td>
+                    {% if detail.conservation_status is defined and detail.conservation_status %}
+                        {{ detail.conservation_status.status_name }}
+                    {% else %}
+                        ...
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>Wikipedia</td>
+                <td>
+                    {% if detail.wikipedia_url is defined and detail.wikipedia_url %}
+                        <a href="{{ detail.wikipedia_url }}" target="_blank">Voir sur Wikipedia</a>
+                    {% else %}...{% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
 

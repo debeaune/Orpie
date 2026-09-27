@@ -1,3 +1,111 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    /* Page générale */
+    body {
+        @apply bg-amber-50 text-stone-800 font-sans;
+    }
+
+    /* Header */
+    .page-header {
+        @apply bg-green-900 text-white text-center py-10 px-4;
+    }
+
+    .page-header h1 {
+        @apply text-4xl font-bold mb-2;
+    }
+
+    .page-header p {
+        @apply text-green-200 mb-4;
+    }
+
+    /* Barre de recherche */
+    #search {
+        @apply w-full max-w-md px-4 py-2 rounded-full text-stone-800 border-0 outline-none;
+    }
+
+    /* Grille de cartes */
+    .especes-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        padding: 2rem;
+        }
+
+         @media (min-width: 768px) {
+            .especes-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .especes-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+    /* Carte */
+    .card {
+        @apply bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow duration-300 no-underline text-stone-800;
+    }
+
+    .card img {
+        @apply w-full h-48 object-cover;
+    }
+
+    .no-photo {
+        @apply w-full h-48 bg-green-100 flex items-center justify-center text-green-700 text-sm;
+    }
+
+    .card-body {
+        @apply p-4;
+    }
+
+    .card-body h2 {
+        @apply text-base font-semibold italic text-green-900;
+    }
+
+    .card-body p {
+        @apply text-sm text-stone-500 mt-1;
+    }
+
+    .detail-container {
+        display: flex;
+        gap: 2rem;
+        padding: 2rem;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .detail-photo img {
+        @apply rounded-xl shadow-lg;
+        width: 400px;
+        object-fit: cover;
+    }
+
+    .detail-info {
+        @apply flex-1;
+    }
+
+    .info-table {
+        @apply w-full border-collapse;
+    }
+
+    .info-table td {
+        @apply py-3 px-4 border-b border-stone-200;
+    }
+
+    .info-table td:first-child {
+        @apply font-semibold text-green-900 w-48;
+    }
+
+    .info-table a {
+        @apply text-green-700 underline;
+    }
+
+    .back-link {
+        @apply text-green-700 underline text-sm;
+    }
+}

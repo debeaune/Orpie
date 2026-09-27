@@ -33,6 +33,7 @@ class EspecesController extends AbstractController
             return [
                 'id' => $espece->getId(),
                 'espece' => $espece->getEspece(),
+                'photo' => $espece->getPhoto(),
             ];
         }, $resultats);
 
