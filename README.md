@@ -2,6 +2,9 @@
 
 A web application for browsing and searching natural species, built with Symfony and Docker.
 
+<img width="1365" height="529" alt="image" src="https://github.com/user-attachments/assets/71a4469d-b4ff-49b0-bd3c-d3e8a6573e17" />
+
+
 ## Overview
 
 Orpie allows users to browse a list of species, search by name in real time, and access a detailed page for each species (Latin name, French name, English name, habitat, conservation status, Wikipedia link).
