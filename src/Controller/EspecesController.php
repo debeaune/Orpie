@@ -14,6 +14,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class EspecesController extends AbstractController
 {
+    
+    #[Route('/', name: 'app_home')]
+    public function home(): Response
+    {
+        return $this->redirectToRoute('especes_index');
+    }
+
     #[Route('/liste-des-especes', name: 'especes_index')]
     public function index(EspeceRepository $especeRepository): Response
     {
